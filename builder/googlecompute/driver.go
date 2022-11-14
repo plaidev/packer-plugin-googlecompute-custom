@@ -61,6 +61,9 @@ type Driver interface {
 	// WaitForInstance waits for an instance to reach the given state.
 	WaitForInstance(state, zone, name string) <-chan error
 
+	// GetInstanceState get current instance state.
+	GetInstanceState(zone, name string) (string, error)
+
 	// CreateOrResetWindowsPassword creates or resets the password for a user on an Windows instance.
 	CreateOrResetWindowsPassword(zone, name string, config *WindowsPasswordConfig) (<-chan error, error)
 

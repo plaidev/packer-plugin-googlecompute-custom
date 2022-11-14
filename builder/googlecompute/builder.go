@@ -43,6 +43,7 @@ func (b *Builder) Prepare(raws ...interface{}) ([]string, []string, error) {
 // Run executes a googlecompute Packer build and returns a packersdk.Artifact
 // representing a GCE machine image.
 func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook) (packersdk.Artifact, error) {
+	ui.Say("RUN!!!")
 	cfg := GCEDriverConfig{
 		Ui:                            ui,
 		ProjectId:                     b.config.ProjectId,
@@ -82,10 +83,18 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 		&StepImportOSLoginSSHKey{
 			Debug: b.config.PackerDebug,
 		},
-		&StepCreateInstance{
-			Debug:         b.config.PackerDebug,
-			GeneratedData: generatedData,
-		},
+		multistep.If(b.config.PackerDebug && b.config.Comm.SSHPrivateKeyFile == "" && b.config.RunningInstanceName == "",
+			&StepCreateInstance{
+				Debug:         b.config.PackerDebug,
+				GeneratedData: generatedData,
+			},
+		),
+		multistep.If(b.config.PackerDebug && b.config.Comm.SSHPrivateKeyFile == "" && b.config.RunningInstanceName != "",
+			&SetMetadataToRunningInstance{
+				Debug:         b.config.PackerDebug,
+				GeneratedData: generatedData,
+			},
+		),
 		&StepCreateWindowsPassword{
 			Debug:        b.config.PackerDebug,
 			DebugKeyPath: fmt.Sprintf("gce_windows_%s.pem", b.config.PackerBuildName),

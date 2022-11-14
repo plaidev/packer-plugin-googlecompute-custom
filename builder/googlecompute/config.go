@@ -162,6 +162,9 @@ type Config struct {
 	// A name to give the launched instance. Beware that this must be unique.
 	// Defaults to `packer-{{uuid}}`.
 	InstanceName string `mapstructure:"instance_name" required:"false"`
+	// A name to give the launched instance. Beware that this must be unique.
+	// Defaults to `packer-{{uuid}}`.
+	RunningInstanceName string `mapstructure:"running_instance_name" required:"false"`
 	// Key/value pair labels to apply to the launched instance.
 	Labels map[string]string `mapstructure:"labels" required:"false"`
 	// The machine type. Defaults to "n1-standard-1".
