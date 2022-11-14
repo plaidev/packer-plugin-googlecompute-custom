@@ -97,6 +97,7 @@ type FlatConfig struct {
 	ImageGuestOsFeatures         []string                   `mapstructure:"image_guest_os_features" required:"false" cty:"image_guest_os_features" hcl:"image_guest_os_features"`
 	ImageStorageLocations        []string                   `mapstructure:"image_storage_locations" required:"false" cty:"image_storage_locations" hcl:"image_storage_locations"`
 	InstanceName                 *string                    `mapstructure:"instance_name" required:"false" cty:"instance_name" hcl:"instance_name"`
+	RunningInstanceName          *string                    `mapstructure:"running_instance_name" required:"false" cty:"running_instance_name" hcl:"running_instance_name"`
 	Labels                       map[string]string          `mapstructure:"labels" required:"false" cty:"labels" hcl:"labels"`
 	MachineType                  *string                    `mapstructure:"machine_type" required:"false" cty:"machine_type" hcl:"machine_type"`
 	Metadata                     map[string]string          `mapstructure:"metadata" required:"false" cty:"metadata" hcl:"metadata"`
@@ -226,6 +227,7 @@ func (*FlatConfig) HCL2Spec() map[string]hcldec.Spec {
 		"image_guest_os_features":         &hcldec.AttrSpec{Name: "image_guest_os_features", Type: cty.List(cty.String), Required: false},
 		"image_storage_locations":         &hcldec.AttrSpec{Name: "image_storage_locations", Type: cty.List(cty.String), Required: false},
 		"instance_name":                   &hcldec.AttrSpec{Name: "instance_name", Type: cty.String, Required: false},
+		"running_instance_name":           &hcldec.AttrSpec{Name: "running_instance_name", Type: cty.String, Required: false},
 		"labels":                          &hcldec.AttrSpec{Name: "labels", Type: cty.Map(cty.String), Required: false},
 		"machine_type":                    &hcldec.AttrSpec{Name: "machine_type", Type: cty.String, Required: false},
 		"metadata":                        &hcldec.AttrSpec{Name: "metadata", Type: cty.Map(cty.String), Required: false},

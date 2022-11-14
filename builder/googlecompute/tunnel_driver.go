@@ -21,7 +21,7 @@ type TunnelDriverLinux struct {
 func (t *TunnelDriverLinux) StartTunnel(cancelCtx context.Context, tempScriptFileName string, timeout int) error {
 	cmd := exec.CommandContext(cancelCtx, tempScriptFileName)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-
+	log.Printf("cmddd:%s", cmd)
 	err := RunTunnelCommand(cmd, timeout)
 	if err != nil {
 		return err

@@ -722,6 +722,14 @@ func (d *driverGCE) WaitForInstance(state, zone, name string) <-chan error {
 	return errCh
 }
 
+func (d *driverGCE) GetInstanceState(zone, name string) (string, error) {
+	instance, err := d.service.Instances.Get(d.projectId, zone, name).Do()
+	if err != nil {
+		return "", err
+	}
+	return instance.Status, nil
+}
+
 func (d *driverGCE) refreshInstanceState(zone, name string) stateRefreshFunc {
 	return func() (string, error) {
 		instance, err := d.service.Instances.Get(d.projectId, zone, name).Do()

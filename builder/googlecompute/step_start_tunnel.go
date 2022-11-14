@@ -299,6 +299,7 @@ func (s *StepStartTunnel) Run(ctx context.Context, state multistep.StateBag) mul
 	defer os.Remove(tempScriptFileName)
 
 	s.tunnelDriver = NewTunnelDriver()
+	ui.Say(tempScriptFileName)
 
 	err = retry.Config{
 		Tries: 11,
